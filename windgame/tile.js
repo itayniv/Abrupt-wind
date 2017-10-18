@@ -9,7 +9,7 @@ class Tile{
 	}
 	draw(){
 		if(!this.shouldDraw){
-			fill(255,6,90);
+			fill(140,140,140);
 			rect(this.x,this.y,this.width,this.height);
 			opacity = opacity - 5;
 		}

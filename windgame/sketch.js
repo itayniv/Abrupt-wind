@@ -12,11 +12,7 @@ var rain = [];
 var rainCount = 100;
 var raindir = 0;
 
-var matX = 40;
-var matY = 20;
 
-var r;
-var j;
 
 var winddirectionX = 0;
 var winddirectionY = 10;
@@ -36,7 +32,7 @@ var dist1 = 0;
 var noteBox = 50;
 
 
-var x = 200;
+var x = 400;
 var y = 200;
 var currX = 0;
 var currY = 0;
@@ -67,15 +63,9 @@ function setup() {
 
 
 	nameP = createP("WIND CONTROLL");
-
   button = createButton("More left wind");
-  button.mousePressed(changeColor);
   slider = createSlider(10, 100, 86);
   nameInput = createInput('More left wind');
-
-
-
-  nameInput.changed(updateText);
 
 
   osc = new p5.Oscillator();
@@ -111,6 +101,12 @@ function draw() {
 
   background(0,0,0,255);
 
+	for (var i = 0; i < rainCount; i++) {
+		rain[i].update();
+		rain[i].draw();
+	}
+
+
 	windslider = slider.value();
  	map(windslider, 0, 100, -1, 1);
 	console.log(map(windslider, 0, 100, -1, 1));
@@ -121,14 +117,14 @@ function draw() {
 	}
 
 	fill(255);
-	text(wind + "wind", 20, 20, 70, 80); // Text wraps within text box
+	text(speedX + "wind", 20, 20, 70, 80); // Text wraps within text box
 	text(gravity + "gravity", 20, 40, 50, 80); // Text wraps within text box
 
   ellipse(x,y,DimX);
 
   speedY = speedY + gravity;
-  speedX = speedX + wind;
 	speedX = map(windslider, 0, 100, -3, 3);
+	speedX = speedX + wind;
 
 
   y = y + speedY;
@@ -145,6 +141,7 @@ function draw() {
 		if(currnote  == i + 1){
 			if(tiles[i].shouldDraw){
 				notefq = currnote*2
+
 				if (!playing) {
 				      // ramp amplitude to 0.5 over 0.1 seconds
 				      osc.amp(0.5, 0.05);
@@ -185,12 +182,9 @@ function draw() {
   speedX = -speedX;
   }
 
-	raindir = mouseX;
 
-  for (var i = 0; i < rainCount; i++) {
-		rain[i].update();
-		rain[i].draw();
-	}
+
+
 
 
 
@@ -248,17 +242,8 @@ function updateText() {
   nameP.html(nameInput.value());
 }
 
-function overpara() {
-  nameP.html('your moues is over me');
-}
 
-function outpara() {
-  nameP.html('your mouse is out');
-}
-function changeColor() {
-  bgcolor = color(random(255));
 
-}
 
 function keyPressed() {
   if (keyCode === UP_ARROW) {
